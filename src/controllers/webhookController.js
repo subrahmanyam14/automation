@@ -282,6 +282,8 @@ exports.twilioVoiceResponse = async (req, res) => {
       return res.send(twiml.toString());
     }
 
+    console.log("Twilio response: ", response);
+
     const updatedLog = await Log.findOneAndUpdate(
       { "entries.messageId": callSid },
       {
