@@ -142,6 +142,10 @@ async function voiceCall({
   scheduleId,
   cancellationAllowed = false,
 }) {
+
+
+  console.log("Message in the voice call", message);
+   
   const callBackUrl = `${
     process.env.WEBHOOK_URL
   }/webhook/twilio?scriptId=${encodeURIComponent(

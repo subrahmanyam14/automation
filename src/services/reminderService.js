@@ -56,6 +56,7 @@ agenda.define("sendReminder", async (job) => {
       `Sending reminder for ${reminder.scheduleId} (${reminder.timeZone})`
     );
     console.log(`Current time in reminder timezone: ${reminderTime.format()}`);
+    console.log("Reminder message:", message);
 
     switch (reminder.deliveryMethod) {
       case "SMS":

@@ -216,7 +216,7 @@ exports.sendGridWebhookResponse = async (req, res) => {
       return res.status(404).send("Log entry not found");
     }
 
-    console.log(`Updated log for email response:`, updatedLog);
+    console.log(`Updated log for email response:, updatedLog`);
 
     res.status(200).send(`
       <html>
@@ -264,10 +264,6 @@ exports.twilioVoiceResponse = async (req, res) => {
   const callSid = req.body.CallSid;
   let response;
 
-  console.log("Twilio request body:", req.body);  // Log request body
-  console.log("Received callSid:", callSid);  // Log callSid
-  console.log("Selected option:", selectedOption);  // Log selected digits
-
   try {
     if (selectedOption === "1") {
       twiml.say("Thank you for confirming");
@@ -282,7 +278,7 @@ exports.twilioVoiceResponse = async (req, res) => {
       return res.send(twiml.toString());
     }
 
-    const updatedLog = await Log.findOneAndUpdate(
+    await Log.findOneAndUpdate(
       { "entries.messageId": callSid },
       {
         $set: {
@@ -290,28 +286,13 @@ exports.twilioVoiceResponse = async (req, res) => {
           "entries.$.updatedAt": new Date(),
           "entries.$.status": "responded",
         },
-      },
-      { new: true }
+      }
     );
-    console.log("Logs updation..................", updatedLog)
-
-    if (!updatedLog) {
-      console.error("Log not found or not updated for callSid:", callSid);
-      twiml.say("Sorry, we could not process your response.");
-      res.type("text/xml");
-      return res.send(twiml.toString());
-    }
-
-    console.log("Log updated:", updatedLog);  // Log updated log
 
     res.type("text/xml");
     res.send(twiml.toString());
   } catch (error) {
     console.error("Error processing voice response:", error);
-    twiml.say("An error occurred while processing your response. Please try again later.");
-    res.type("text/xml");
-    res.send(twiml.toString());
+    res.status(500).send("Error processing response");
   }
 };
-
-
