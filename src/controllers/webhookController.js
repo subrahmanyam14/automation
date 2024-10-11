@@ -282,8 +282,6 @@ exports.twilioVoiceResponse = async (req, res) => {
       return res.send(twiml.toString());
     }
 
-    console.log("Twilio response: ", response);
-
     const updatedLog = await Log.findOneAndUpdate(
       { "entries.messageId": callSid },
       {
@@ -295,6 +293,7 @@ exports.twilioVoiceResponse = async (req, res) => {
       },
       { new: true }
     );
+    console.log("Logs updation..................", updatedLog)
 
     if (!updatedLog) {
       console.error("Log not found or not updated for callSid:", callSid);
@@ -314,4 +313,5 @@ exports.twilioVoiceResponse = async (req, res) => {
     res.send(twiml.toString());
   }
 };
+
 

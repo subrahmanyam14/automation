@@ -166,7 +166,7 @@ async function voiceCall({
 
     console.log(`Call made: ${call.sid}`);
 
-    await createOrUpdateLog({
+    const response = await createOrUpdateLog({
       practiceId,
       scheduleId,
       scriptId,
@@ -180,6 +180,8 @@ async function voiceCall({
         message: message,
       },
     });
+
+    console.log("Call created and details are updated in the createOrUpdateLog,,,,,,,,,,,,,,", response)
 
     return call;
   } catch (err) {

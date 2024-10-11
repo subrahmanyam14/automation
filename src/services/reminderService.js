@@ -194,8 +194,7 @@ async function scheduleReminder(reminder) {
       timeZone: ianaTimeZone,
     });
     console.log(
-      `Scheduled reminder for ${
-        reminder.scheduleId
+      `Scheduled reminder for ${reminder.scheduleId
       } at ${deliveryTime.format()} (${ianaTimeZone})`
     );
   } catch (error) {
