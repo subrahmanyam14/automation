@@ -247,6 +247,7 @@ exports.twilioVoiceCall = async (req, res) => {
     numDigits: 1,
     action: "/webhook/voice-response",
     method: "POST",
+    timeout: 8,
   });
 
   gather.say(`${message}. Press 1 to confirm, or 2 to cancel.`);
