@@ -258,7 +258,7 @@ exports.twilioVoiceCall = async (req, res) => {
   gather.say(`${message}. Press 1 to confirm, or 2 to cancel.`);
 
   // Redirect in case of no input
-  twiml.redirect("/webhook/repeat-call-message"); // Redirects to repeat the message if no input
+  twiml.redirect("/webhook/voice"); // Redirects to repeat the message if no input
 
   res.type("text/xml");
   res.send(twiml.toString());
@@ -285,7 +285,7 @@ exports.twilioVoiceResponse = async (req, res) => {
       return res.send(twiml.toString());
     }
 
-    await Log.findOneAndUpdate(
+    const updatedLog = await Log.findOneAndUpdate(
       { "entries.messageId": callSid },
       {
         $set: {
@@ -295,6 +295,8 @@ exports.twilioVoiceResponse = async (req, res) => {
         },
       }
     );
+    console.log("callsid and response : ", callSid, response);
+    console.log("Updated log:", updatedLog);
 
     res.type("text/xml");
     res.send(twiml.toString());

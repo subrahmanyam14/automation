@@ -1,7 +1,7 @@
 const ReminderConfig = require("../models/reminderConfigModel");
 const ScriptModel = require("../models/scriptModel");
 const Log = require("../models/logModel");
-const { sendSMS, sendEmail, voiceCall } = require("../utils/utils");
+const { sendSMS, sendEmail, voiceCall } = require("../utils/utils.js");
 const Agenda = require("agenda");
 const moment = require("moment-timezone");
 

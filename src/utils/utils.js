@@ -42,13 +42,15 @@ async function createOrUpdateLog(logData) {
       }
     }
 
-    await log.save();
+    const updatedLog = await log.save();
     console.log(`Log created/updated for ${logData.entry.type}:`, log);
+    return updatedLog;
   } catch (error) {
     console.error(
       `Error creating/updating log for ${logData.entry.type}:`,
       error
     );
+    return error;
   }
 }
 
