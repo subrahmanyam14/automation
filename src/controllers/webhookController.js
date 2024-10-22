@@ -243,15 +243,22 @@ exports.twilioVoiceCall = async (req, res) => {
 
   console.log("Calling with message", message);
 
+  // Gather digits from user input
   const gather = twiml.gather({
     numDigits: 1,
-    action: "/webhook/voice-response",
+    action: "/webhook/voice-response", // Endpoint to handle digit input
     method: "POST",
+    timeout: 8, // Time to wait for user input
+    finishOnKey: '' // Finish when user presses a digit (no need for keypress)
   });
 
+  console.log("Message for user,", message);
+
+  // Play message to the user during the call
   gather.say(`${message}. Press 1 to confirm, or 2 to cancel.`);
 
-  twiml.redirect("/voice");
+  // Redirect in case of no input
+  twiml.redirect("/webhook/repeat-call-message"); // Redirects to repeat the message if no input
 
   res.type("text/xml");
   res.send(twiml.toString());
