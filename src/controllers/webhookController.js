@@ -216,7 +216,7 @@ exports.sendGridWebhookResponse = async (req, res) => {
       return res.status(404).send("Log entry not found");
     }
 
-    console.log(`Updated log for email response:, updatedLog`);
+    console.log(`Updated log for email response:`, updatedLog);
 
     res.status(200).send(`
       <html>
@@ -247,7 +247,6 @@ exports.twilioVoiceCall = async (req, res) => {
     numDigits: 1,
     action: "/webhook/voice-response",
     method: "POST",
-    timeout: 8,
   });
 
   gather.say(`${message}. Press 1 to confirm, or 2 to cancel.`);
